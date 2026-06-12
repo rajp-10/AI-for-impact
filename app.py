@@ -4,14 +4,14 @@ from ai_engine import analyze_job_posting
 # Configure Page Layout to look professional
 st.set_page_config(page_title="ShieldAI | Recruitment Fraud Detector", layout="wide")
 
-st.title("🛡️ ShieldAI: Job Posting Scam Detector")
-st.caption("AI-powered multi-step threat intelligence engine for student internship protection.")
+st.title("Job Posting Scam Detector")
+st.caption("Multi-step threat intelligence engine for student internship protection.")
 
 # Create Two Pillars/Columns for Layout Structure
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.subheader("📋 Step 1: Input Job Details")
+    st.subheader("Input Job Details")
     company = st.text_input("Company Name / Recruiter Email Domain", placeholder="e.g., Apex Tech or hr-booking@gmail.com")
     job_details = st.text_area("Paste Job Description or Email Message", placeholder="Paste the full text here...", height=300)
     
