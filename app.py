@@ -1,5 +1,6 @@
 import streamlit as st
 from ai_engine import analyze_job_posting
+from pdf_generator import generate_pdf
 
 # Configure Page Layout to look professional
 st.set_page_config(page_title="ShieldAI | Recruitment Fraud Detector", layout="wide")
@@ -12,13 +13,13 @@ col1, col2 = st.columns([1, 1])
 
 with col1:
     st.subheader("Input Job Details")
-    company = st.text_input("Company Name / Recruiter Email Domain", placeholder="e.g., Apex Tech or hr-booking@gmail.com")
+    company = st.text_input("Company Name / Recruiter Email Domain", placeholder="e.g. hr-booking@gmail.com")
     job_details = st.text_area("Paste Job Description or Email Message", placeholder="Paste the full text here...", height=300)
     
     analyze_btn = st.button("Run Security Audit", type="primary", use_container_width=True)
 
 with col2:
-    st.subheader("📊 Step 2: Threat Analysis Report")
+    st.subheader(" Threat Analysis Report")
     
     if analyze_btn:
         if not company or not job_details:
@@ -56,5 +57,18 @@ with col2:
                     st.markdown("### 🛡️ Recommended Student Action Plan")
                     for step in report['safety_checklist']:
                         st.markdown(f"- [ ] {step}")
+
+                    pdf_file = generate_pdf(company, report)
+
+                    with open(pdf_file, "rb") as file:
+                        st.download_button(
+                            label="📄 Download Audit Report",
+                            data=file,
+                            file_name="ShieldAI_Report.pdf",
+                            mime="application/pdf"
+                        )
+
+                    
     else:
-        st.info("Input a job posting on the left and trigger the security audit pipeline to generate output metrics.")
+        st.info("Input a job posting and run security audit to generate output metrics.")
+
